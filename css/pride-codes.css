@@ -1,0 +1,29 @@
+.singlebutton {
+	margin: 10px 10px;
+}
+.radio-button-label > input {
+	display: none;
+}
+.radio-button-label > .singlebutton {
+	background-color: #fff;
+	padding: 5px;
+	cursor: pointer;
+	border: 3px solid #ddd;
+}
+.radio-button-label > input:checked + .singlebutton {
+	border: 3px solid #2885bb;
+}
+.radio-button-label {
+	text-align: center;
+	width: 260px;
+}
+.singlebutton {
+	text-align: center;
+	display: inline-block;
+	width: 260px;
+	vertical-align: top;
+}
+.form-table td .singlebutton p {
+	font-size: 12px;
+	min-height: 60px;
+}
