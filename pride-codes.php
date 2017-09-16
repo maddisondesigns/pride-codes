@@ -111,7 +111,7 @@ class pride_codes_plugin {
 			__( 'Visit the', 'pridecodes' ),
 			esc_url( esc_html__( 'http://www.equalitycampaign.org.au/planyourvote?splash=1', 'pridecodes' ) ),
 			__( 'Equality Campaign', 'pridecodes' ),
-			__( 'for more information.', 'pridecodes' )
+			__( 'page for more information.', 'pridecodes' )
 		);
 	}
 
