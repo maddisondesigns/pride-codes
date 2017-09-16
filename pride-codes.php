@@ -6,7 +6,7 @@ Description: Show your support for your fellow LGBTQI+ colleagues
 Version: 1.0.0
 Author: Anthony Hortin
 Author URI: http://maddisondesigns.com
-Text Domain: pride-codes
+Text Domain: pridecodes
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -28,19 +28,18 @@ class pride_codes_plugin {
 			'pridecodes_voteyesbar' => 'voteyesbar',
 			'pridecodes_voteyescode' => 'voteyescode',
 			'pridecodes_voteyesrainbow' => 'voteyesrainbow',
-			);
+		);
 
 		add_action( 'admin_menu', array( $this, 'pridecodes_create_menu_option' ) );
 		add_action( 'admin_init', array( $this, 'pridecodes_admin_init' ) );
 		add_filter( 'plugin_action_links', array( $this, 'pridecodes_add_settings_link'), 10, 2);
 		add_action( 'admin_enqueue_scripts', array( $this, 'pridecodes_admin_wp_enqueue_script' ) );
-		//add_action( 'head', 'woocommerce_breadcrumb', 20, 0);
 
 		$this->options = ( get_option( 'pridecodes_option' ) === false ? $this->pridecodes_default : get_option( 'pridecodes_option' ) );
 
-		if( !empty( $this->options['pridecodes_option'] ) ) {
-			// Show our widget
-			//add_action( 'init', array( $this, 'wcb_remove_woocommerce_breadcrumb' ) );
+		if( !empty( $this->options['pridecodes_selected_widget'] ) ) {
+			// Enqueue our widget script/style, if one's been selected
+			add_action( 'wp_enqueue_scripts', array( $this, 'pridecodes_wp_enqueue_scripts' ) );
 		}
 	}
 
@@ -82,8 +81,6 @@ class pride_codes_plugin {
 	 */
 	public function pridecodes_plugin_settings_page() {
 		$this->options = ( get_option( 'pridecodes_option' ) === false ? $this->pridecodes_default : get_option( 'pridecodes_option' ) );
-
-		//settings_errors( 'woocommerce-breadcrumb-warnings' );
 
 		echo '<div class="wrap">';
 			screen_icon();
@@ -128,12 +125,12 @@ class pride_codes_plugin {
 	 * Display and fill the form field for the delimeter setting
 	 */
 	public function pridecodes_enable_widget_callback() {
-		$enable_widget = ( isset( $this->options['pridecodes_option'] ) ? $this->options['pridecodes_option'] : '0' );
+		$enable_widget = ( isset( $this->options['pridecodes_selected_widget'] ) ? $this->options['pridecodes_selected_widget'] : '' );
 
 		echo '<div class="image_radio_button_control">';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesleft" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+		printf( '<input id="pridecodes_voteyesleft" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
 			$this->pridecodes_choices['pridecodes_voteyesleft'],
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesleft'], false ) );
 		echo '<div class="singlebutton">';
@@ -143,7 +140,7 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesright" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+		printf( '<input id="pridecodes_voteyesright" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
 			$this->pridecodes_choices['pridecodes_voteyesright'],
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesright'], false ) );
 		echo '<div class="singlebutton">';
@@ -153,7 +150,7 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesbar" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+		printf( '<input id="pridecodes_voteyesbar" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
 			$this->pridecodes_choices['pridecodes_voteyesbar'],
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesbar'], false ) );
 		echo '<div class="singlebutton">';
@@ -163,7 +160,7 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyescode" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+		printf( '<input id="pridecodes_voteyescode" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
 			$this->pridecodes_choices['pridecodes_voteyescode'],
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyescode'], false ) );
 		echo '<div class="singlebutton">';
@@ -173,7 +170,7 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesrainbow" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+		printf( '<input id="pridecodes_voteyesrainbow" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
 			$this->pridecodes_choices['pridecodes_voteyesrainbow'],
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesrainbow'], false ) );
 		echo '<div class="singlebutton">';
@@ -191,68 +188,47 @@ class pride_codes_plugin {
 	public function pridecodes_plugin_sanitize_options( $input ) {
 		$valid = array();
 
-		// Validate the inputs
-		$valid['wcb_enable_breadcrumbs'] = ( isset( $input['wcb_enable_breadcrumbs'] ) ? '1' : '0' );
-
-		$valid['wcb_breadcrumb_delimiter'] = wp_kses_data( $input['wcb_breadcrumb_delimiter'] );
-
-		$valid['wcb_wrap_before'] = wp_kses_post( $input['wcb_wrap_before'] );
-
-		$valid['wcb_wrap_after'] = wp_kses_post( $input['wcb_wrap_after'] );
-
-		$valid['wcb_before'] = wp_kses_post( $input['wcb_before'] );
-
-		$valid['wcb_after'] = wp_kses_post( $input['wcb_after'] );
-
-		$valid['wcb_home_text'] = sanitize_text_field( $input['wcb_home_text'] );
-
-		$valid['wcb_home_url'] = esc_url( $input['wcb_home_url'] );
+		// Validate the input. If the value isn't found for some reason, return the default value
+		if ( in_array( $input['pridecodes_selected_widget'], $this->pridecodes_choices, true ) ) {
+			$valid['pridecodes_selected_widget'] = $input['pridecodes_selected_widget'];
+		} else {
+			$valid['pridecodes_selected_widget'] = $this->pridecodes_default;
+		}
 
 		return $valid;
 	}
 
 	/**
-	* Remove the WooCommerce Breadcrumbs
-	*/
-	public function wcb_remove_woocommerce_breadcrumb() {
-		if ( $this->wootheme_theme ) {
-			remove_filter( 'woo_main_before', 'woo_display_breadcrumbs', 10 );
-		}
-		else {
-			remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
-		}
-	}
+	 * Enqueue our scripts or styles based on the selected widget
+	 */
+	public function pridecodes_wp_enqueue_scripts() {
 
-	/**
-	* Change the Home link for the Breadrumbs
-	*/
-	public function wcb_woocommerce_breadcrumb_home_url() {
-		return $this->options['wcb_home_url'];
-	}
+		switch ( $this->options['pridecodes_selected_widget'] ) {
+			case $this->pridecodes_choices['pridecodes_voteyesleft'] :
+				wp_enqueue_script( 'voteyes', 'https://cdn.pride.codes/js/voteyes-left.js', array(), '1.0.0', true );
+				break;
 
-	/**
-	* Set the breadcrumbs
-	*/
-	public function wcb_woocommerce_set_breadcrumbs() {
+			case $this->pridecodes_choices['pridecodes_voteyesright'] :
+				wp_enqueue_script( 'voteyes', 'https://cdn.pride.codes/js/voteyes.js', array(), '1.0.0', true );
+				break;
 
-		if ( $this->wootheme_theme ) {
-			return array(
-				'separator' => $this->options['wcb_breadcrumb_delimiter'],
-				'before' => $this->options['wcb_wrap_before'],
-				'after' => $this->options['wcb_wrap_after'],
-				'show_home' => _x( $this->options['wcb_home_text'], 'breadcrumb', 'woocommerce-breadcrumbs' )
-			);
+			case $this->pridecodes_choices['pridecodes_voteyesbar'] :
+				wp_enqueue_style( 'voteyes', 'https://cdn.pride.codes/css/bar_body.css', array(), '1.0.0', 'all' );
+				break;
+
+			case $this->pridecodes_choices['pridecodes_voteyescode'] :
+				wp_enqueue_script( 'voteyes', 'https://cdn.pride.codes/js/codecorner.js', array(), '1.0.0', true );
+				break;
+
+			case $this->pridecodes_choices['pridecodes_voteyesrainbow'] :
+				wp_enqueue_script( 'voteyes', 'https://cdn.pride.codes/js/rainbowcorner.js', array(), '1.0.0', true );
+				break;
+
+			default:
+				return;
 		}
-		else {
-			return array(
-				'delimiter' => $this->options['wcb_breadcrumb_delimiter'],
-				'wrap_before' => $this->options['wcb_wrap_before'],
-				'wrap_after' => $this->options['wcb_wrap_after'],
-				'before' => $this->options['wcb_before'],
-				'after' => $this->options['wcb_after'],
-				'home' => _x( $this->options['wcb_home_text'], 'breadcrumb', 'woocommerce-breadcrumbs' )
-			);
-		}
+
+		return;
 	}
 }
 
