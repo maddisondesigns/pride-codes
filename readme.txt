@@ -11,7 +11,7 @@ A simple plugin to help show your support for your LGBTQI+ friends & colleagues.
 
 == Description ==
 
-[pride.codes](https://pride.codes/) provides a collection of simple widgets for businesses to add to their sites. We want businesses to actively show their support for their LGBTQI+ colleagues.
+[pride.codes](https://pride.codes/) provides a collection of simple widgets for businesses to add to their sites. We want businesses to actively show their support for their LGBTQI+ friends & colleagues.
 
 The Marriage equality campaign is about the values we hold dear. All Australians (or people from any country, for that matter) should be treated equally under the law — and that includes being able to marry the person they love.
 
