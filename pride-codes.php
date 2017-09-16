@@ -16,10 +16,19 @@ class pride_codes_plugin {
 
 	private $options;
 	private $pridecodes_default;
+	private $pridecodes_choices;
 
 	public function __construct() {
 
 		$this->pridecodes_default = 'voteyesright';
+
+		$this->pridecodes_choices = array(
+			'pridecodes_voteyesleft' => 'voteyesleft',
+			'pridecodes_voteyesright' => 'voteyesright',
+			'pridecodes_voteyesbar' => 'voteyesbar',
+			'pridecodes_voteyescode' => 'voteyescode',
+			'pridecodes_voteyesrainbow' => 'voteyesrainbow',
+			);
 
 		add_action( 'admin_menu', array( $this, 'pridecodes_create_menu_option' ) );
 		add_action( 'admin_init', array( $this, 'pridecodes_admin_init' ) );
@@ -124,8 +133,9 @@ class pride_codes_plugin {
 		echo '<div class="image_radio_button_control">';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesleft" type="radio" name="pridecodes_breadcrumb_options[pridecodes_option]" value="voteyesleft" %1$s/>',
-			checked( $enable_widget, 'voteyesleft', false ) );
+		printf( '<input id="pridecodes_voteyesleft" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+			$this->pridecodes_choices['pridecodes_voteyesleft'],
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesleft'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/voteyes_corner_left.png" />';
 		echo __( '<p>Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner. (Left Aligned)</p>', 'pridecodes' );
@@ -133,8 +143,9 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesright" type="radio" name="pridecodes_breadcrumb_options[pridecodes_option]" value="voteyesright" %1$s/>',
-			checked( $enable_widget, 'voteyesright', false ) );
+		printf( '<input id="pridecodes_voteyesright" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+			$this->pridecodes_choices['pridecodes_voteyesright'],
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesright'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/voteyes_corner_right.png" />';
 		echo __( '<p>Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner. (Right Aligned)</p>', 'pridecodes' );
@@ -142,8 +153,9 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesbar" type="radio" name="pridecodes_breadcrumb_options[pridecodes_option]" value="voteyesbar" %1$s/>',
-			checked( $enable_widget, 'voteyesbar', false ) );
+		printf( '<input id="pridecodes_voteyesbar" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+			$this->pridecodes_choices['pridecodes_voteyesbar'],
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesbar'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/pride_bars.png" />';
 		echo __( '<p>Add a simple pride strip at the top of your website or an element on your page.</p>', 'pridecodes' );
@@ -151,8 +163,9 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyescode" type="radio" name="pridecodes_breadcrumb_options[pridecodes_option]" value="voteyescode" %1$s/>',
-			checked( $enable_widget, 'voteyescode', false ) );
+		printf( '<input id="pridecodes_voteyescode" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+			$this->pridecodes_choices['pridecodes_voteyescode'],
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyescode'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/code_corner.png" />';
 		echo __( '<p>Add a simple “Pride Codes” corner to your website.</p>', 'pridecodes' );
@@ -160,8 +173,9 @@ class pride_codes_plugin {
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
-		printf( '<input id="pridecodes_voteyesbar" type="radio" name="pridecodes_breadcrumb_options[pridecodes_option]" value="voteyesrainbox" %1$s/>',
-			checked( $enable_widget, 'voteyesrainbox', false ) );
+		printf( '<input id="pridecodes_voteyesrainbow" type="radio" name="pridecodes_option[pridecodes_option]" value="%1$s" %2$s/>',
+			$this->pridecodes_choices['pridecodes_voteyesrainbow'],
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesrainbow'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/rainbow_corner.png" />';
 		echo __( '<p>Add a simple pride corner to your website.</p>', 'pridecodes' );
@@ -176,13 +190,6 @@ class pride_codes_plugin {
 	 */
 	public function pridecodes_plugin_sanitize_options( $input ) {
 		$valid = array();
-
-		// If the Restore Defaults button is clicked, reset the values to the default values
-		if ( isset( $_POST['restore_defaults'] ) ) {
-			$message = esc_html('Default options restored', 'woocommerce-breadcrumbs' );
-			add_settings_error( 'woocommerce-breadcrumbs', esc_attr( 'wcb_restore_defaults' ), $message, 'updated' );
-			return $this->breadcrumb_defaults;
-		}
 
 		// Validate the inputs
 		$valid['wcb_enable_breadcrumbs'] = ( isset( $input['wcb_enable_breadcrumbs'] ) ? '1' : '0' );
