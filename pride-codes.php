@@ -51,7 +51,7 @@ class pride_codes_plugin {
 	}
 
 	/**
-	 * Add a settings link to plugin page
+	 * Add a settings link to the plugin page
 	 */
 	public function pridecodes_add_settings_link( $links, $file ) {
 		static $this_plugin;
@@ -69,7 +69,7 @@ class pride_codes_plugin {
 	}
 
 	public function pridecodes_admin_wp_enqueue_script( $hook ) {
-		// Load only on ?page=mypluginname
+		// Load only on ?page=pride-codes
 		if( $hook != 'settings_page_pride-codes' ) {
 			return;
 		}
@@ -122,7 +122,7 @@ class pride_codes_plugin {
 	}
 
 	/**
-	 * Display and fill the form field for the delimeter setting
+	 * Display and fill the radio button for selecting the widget
 	 */
 	public function pridecodes_enable_widget_callback() {
 		$enable_widget = ( isset( $this->options['pridecodes_selected_widget'] ) ? $this->options['pridecodes_selected_widget'] : '' );
@@ -183,7 +183,7 @@ class pride_codes_plugin {
 	}
 
 	/**
-	 * Validate and sanitize each of our options
+	 * Validate and sanitize our option
 	 */
 	public function pridecodes_plugin_sanitize_options( $input ) {
 		$valid = array();
