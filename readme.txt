@@ -1,6 +1,6 @@
 === Pride Codes ===
 Contributors: ahortin, devjack
-Tags: pride
+Tags: pride, marriage equality, lgbtqi, equality
 Requires at least: 4.8
 Tested up to: 4.8
 Stable tag: 1.0.0
