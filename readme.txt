@@ -8,6 +8,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A simple plugin to help show your support for your LGBTQI+ colleagues.
+PLEASE NOTE: THIS IS NOT YET COMPLETE
 
 == Description ==
 
