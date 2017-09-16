@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Pride Codes
-Plugin URI: http://maddisondesigns.com/woocommerce-breadcrumbs
-Description: Show your support for your fellow LGBTQI+ colleagues
+Plugin URI: https://pride.codes
+Description: Show your support for your fellow LGBTQI+ friends & colleagues
 Version: 1.0.0
 Author: Anthony Hortin
 Author URI: http://maddisondesigns.com
