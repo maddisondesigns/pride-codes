@@ -42,7 +42,7 @@ The scripts that this plugins uses were developed by Australian developer, [Jack
 Like the script, all images are courtesy of [Jack Skinner](https://developerjack.com/).
 
 = How are the banners displayed? =
-The corner banners are fancy shmancy svg's and the horizontal strip is css. No images are used all so they look great no matter what resolution you're displaying.
+The corner banners are fancy shmancy svg's and the horizontal strip is css. No images are used at all so they look great no matter what resolution you're displaying.
 
 == Screenshots ==
 
