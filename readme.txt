@@ -1,5 +1,5 @@
 === Pride Codes ===
-Contributors: ahortin
+Contributors: ahortin, devjack
 Tags: pride
 Requires at least: 4.8
 Tested up to: 4.8
