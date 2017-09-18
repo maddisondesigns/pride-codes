@@ -35,7 +35,7 @@ class pride_codes_plugin {
 		add_filter( 'plugin_action_links', array( $this, 'pridecodes_add_settings_link'), 10, 2);
 		add_action( 'admin_enqueue_scripts', array( $this, 'pridecodes_admin_wp_enqueue_script' ) );
 
-		$this->options = ( get_option( 'pridecodes_option' ) === false ? $this->pridecodes_default : get_option( 'pridecodes_option' ) );
+		$this->options = get_option( 'pridecodes_option', $this->pridecodes_default );
 
 		if( !empty( $this->options['pridecodes_selected_widget'] ) ) {
 			// Enqueue our widget script/style, if one's been selected
@@ -47,7 +47,10 @@ class pride_codes_plugin {
 	 * Add a new option to the Settings menu
 	 */
 	public function pridecodes_create_menu_option() {
-		add_options_page( 'Pride Codes', 'Pride Codes', 'manage_options', 'pride-codes', array( $this, 'pridecodes_plugin_settings_page' ) );
+		add_options_page( __( 'Pride Codes', 'pride-codes' ), __( 'Pride Codes', 'pride-codes' ), 'manage_options',
+		'pride-codes',
+		array( $this,
+		'pridecodes_plugin_settings_page' ) );
 	}
 
 	/**
@@ -61,7 +64,7 @@ class pride_codes_plugin {
 		}
 
 		if( $file == $this_plugin ) {
-			$settings_link = '<a href="options-general.php?page=pride-codes">' . __( 'Settings', 'pride-codes' ) . '</a>';
+			$settings_link = '<a href="options-general.php?page=pride-codes">' . esc_html__( 'Settings', 'pride-codes' ) . '</a>';
 			array_unshift( $links, $settings_link ) ;
 		}
 
@@ -80,7 +83,7 @@ class pride_codes_plugin {
 	 * Create our settings page
 	 */
 	public function pridecodes_plugin_settings_page() {
-		$this->options = ( get_option( 'pridecodes_option' ) === false ? $this->pridecodes_default : get_option( 'pridecodes_option' ) );
+		$this->options = get_option( 'pridecodes_option', $this->pridecodes_default );
 
 		echo '<div class="wrap">';
 			screen_icon();
@@ -89,7 +92,7 @@ class pride_codes_plugin {
 				settings_fields( 'pridecodes_options' );
 				do_settings_sections( 'pride-codes' );
 				echo '<p>';
-					submit_button( 'Save Changes', 'primary', 'submit', false  );
+					submit_button( __( 'Save Changes', 'pride-codes' ), 'primary', 'submit', false  );
 				echo '</p>';
 			echo '</form>';
 		echo '</div>';
@@ -101,8 +104,10 @@ class pride_codes_plugin {
 	 */
 	public function pridecodes_admin_init() {
 		register_setting( 'pridecodes_options', 'pridecodes_option', array( $this, 'pridecodes_plugin_sanitize_options' ) );
-		add_settings_section( 'pridecodes_general_settings', 'Fly The Flag', array( $this, 'pridecodes_plugin_section_message_callback' ), 'pride-codes' );
-		add_settings_field( 'pridecodes_enable_widget', 'Select Widget', array( $this, 'pridecodes_enable_widget_callback' ), 'pride-codes', 'pridecodes_general_settings' );
+		add_settings_section( 'pridecodes_general_settings', __( 'Fly The Flag', 'pride-codes' ), array( $this,
+		'pridecodes_plugin_section_message_callback' ), 'pride-codes' );
+		add_settings_field( 'pridecodes_enable_widget', __( 'Select Widget', 'pride-codes' ), array( $this,
+		'pridecodes_enable_widget_callback' ), 'pride-codes', 'pridecodes_general_settings' );
 	}
 
 	/**
@@ -111,13 +116,13 @@ class pride_codes_plugin {
 	public function pridecodes_plugin_section_message_callback() {
 		printf( '<p><a href="%1$s" target="_blank">Pride.Codes</a> %2$s</p>' ,
 			esc_url( 'https://pride.codes' ),
-			__('provides a collection of simple widgets for businesses to add to their sites. We want businesses to actively show their support for their LGBTIQ+ friends &amp; colleagues.', 'pride-codes')
+			esc_html__('provides a collection of simple widgets for businesses to add to their sites. We want businesses to actively show their support for their LGBTIQ+ friends &amp; colleagues.', 'pride-codes')
 		);
 		printf( '<p>%1$s <a href="%2$s" target="_blank">%3$s</a> %4$s</p>' ,
-			__( 'Visit the', 'pride-codes' ),
+			esc_html__( 'Visit the', 'pride-codes' ),
 			esc_url( 'http://www.equalitycampaign.org.au/planyourvote?splash=1' ),
-			__( 'Equality Campaign', 'pride-codes' ),
-			__( 'page for more information.', 'pride-codes' )
+			esc_html__( 'Equality Campaign', 'pride-codes' ),
+			esc_html__( 'page for more information.', 'pride-codes' )
 		);
 	}
 
@@ -131,51 +136,54 @@ class pride_codes_plugin {
 
 		echo '<label class="radio-button-label">';
 		printf( '<input id="pridecodes_voteyesleft" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
-			$this->pridecodes_choices['pridecodes_voteyesleft'],
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyesleft'] ),
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesleft'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/voteyes_corner_left.png" />';
-		echo __( '<p>Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner. (Left Aligned)</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner.
+		# (Left Aligned)', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
 		printf( '<input id="pridecodes_voteyesright" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
-			$this->pridecodes_choices['pridecodes_voteyesright'],
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyesright'] ),
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesright'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/voteyes_corner_right.png" />';
-		echo __( '<p>Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner. (Right Aligned)</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner.
+		# (Right Aligned)', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
 		printf( '<input id="pridecodes_voteyesbar" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
-			$this->pridecodes_choices['pridecodes_voteyesbar'],
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyesbar'] ),
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesbar'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/pride_bars.png" />';
-		echo __( '<p>Add a simple pride strip at the top of your website or an element on your page.</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Add a simple pride strip at the top of your website or an element on your page.',
+		'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
 		printf( '<input id="pridecodes_voteyescode" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
-			$this->pridecodes_choices['pridecodes_voteyescode'],
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyescode'] ),
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyescode'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/code_corner.png" />';
-		echo __( '<p>Add a simple “Pride Codes” corner to your website.</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Add a simple “Pride Codes” corner to your website.', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
 		echo '<label class="radio-button-label">';
 		printf( '<input id="pridecodes_voteyesrainbow" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
-			$this->pridecodes_choices['pridecodes_voteyesrainbow'],
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyesrainbow'] ),
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesrainbow'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/rainbow_corner.png" />';
-		echo __( '<p>Add a simple pride corner to your website.</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Add a simple pride corner to your website.', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
