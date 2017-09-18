@@ -35,7 +35,7 @@ class pride_codes_plugin {
 		add_filter( 'plugin_action_links', array( $this, 'pridecodes_add_settings_link'), 10, 2);
 		add_action( 'admin_enqueue_scripts', array( $this, 'pridecodes_admin_wp_enqueue_script' ) );
 
-		$this->options = ( get_option( 'pridecodes_option' ) === false ? $this->pridecodes_default : get_option( 'pridecodes_option' ) );
+		$this->options = get_option( 'pridecodes_option', $this->pridecodes_default );
 
 		if( !empty( $this->options['pridecodes_selected_widget'] ) ) {
 			// Enqueue our widget script/style, if one's been selected
@@ -80,7 +80,7 @@ class pride_codes_plugin {
 	 * Create our settings page
 	 */
 	public function pridecodes_plugin_settings_page() {
-		$this->options = ( get_option( 'pridecodes_option' ) === false ? $this->pridecodes_default : get_option( 'pridecodes_option' ) );
+		$this->options = get_option( 'pridecodes_option', $this->pridecodes_default );
 
 		echo '<div class="wrap">';
 			screen_icon();
