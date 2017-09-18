@@ -47,7 +47,10 @@ class pride_codes_plugin {
 	 * Add a new option to the Settings menu
 	 */
 	public function pridecodes_create_menu_option() {
-		add_options_page( 'Pride Codes', 'Pride Codes', 'manage_options', 'pride-codes', array( $this, 'pridecodes_plugin_settings_page' ) );
+		add_options_page( __( 'Pride Codes', 'pride-codes' ), __( 'Pride Codes', 'pride-codes' ), 'manage_options',
+		'pride-codes',
+		array( $this,
+		'pridecodes_plugin_settings_page' ) );
 	}
 
 	/**
@@ -89,7 +92,7 @@ class pride_codes_plugin {
 				settings_fields( 'pridecodes_options' );
 				do_settings_sections( 'pride-codes' );
 				echo '<p>';
-					submit_button( 'Save Changes', 'primary', 'submit', false  );
+					submit_button( __( 'Save Changes', 'pride-codes' ), 'primary', 'submit', false  );
 				echo '</p>';
 			echo '</form>';
 		echo '</div>';
@@ -101,8 +104,10 @@ class pride_codes_plugin {
 	 */
 	public function pridecodes_admin_init() {
 		register_setting( 'pridecodes_options', 'pridecodes_option', array( $this, 'pridecodes_plugin_sanitize_options' ) );
-		add_settings_section( 'pridecodes_general_settings', 'Fly The Flag', array( $this, 'pridecodes_plugin_section_message_callback' ), 'pride-codes' );
-		add_settings_field( 'pridecodes_enable_widget', 'Select Widget', array( $this, 'pridecodes_enable_widget_callback' ), 'pride-codes', 'pridecodes_general_settings' );
+		add_settings_section( 'pridecodes_general_settings', __( 'Fly The Flag', 'pride-codes' ), array( $this,
+		'pridecodes_plugin_section_message_callback' ), 'pride-codes' );
+		add_settings_field( 'pridecodes_enable_widget', __( 'Select Widget', 'pride-codes' ), array( $this,
+		'pridecodes_enable_widget_callback' ), 'pride-codes', 'pridecodes_general_settings' );
 	}
 
 	/**
