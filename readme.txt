@@ -3,7 +3,7 @@ Contributors: ahortin, devjack
 Tags: pride, marriage equality, lgbtqi, equality
 Requires at least: 4.8
 Tested up to: 4.8.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,9 @@ The corner banners are fancy shmancy svg's and the horizontal strip is css. No i
 
 
 == Changelog ==
+
+= 1.0.1 =
+- Added escaping and translation mods. Props @peterwilsoncc
 
 = 1.0 =
 - Initial version. Yay!
