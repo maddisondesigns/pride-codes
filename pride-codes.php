@@ -140,7 +140,8 @@ class pride_codes_plugin {
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesleft'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/voteyes_corner_left.png" />';
-		echo esc_html__( '<p>Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner. (Left Aligned)</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner.
+		# (Left Aligned)', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
@@ -150,7 +151,8 @@ class pride_codes_plugin {
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesright'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/voteyes_corner_right.png" />';
-		echo esc_html__( '<p>Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner. (Right Aligned)</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Support Australia’s #VoteYes Marriage Equality campaign with a #VoteYes pride corner.
+		# (Right Aligned)', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
@@ -160,7 +162,8 @@ class pride_codes_plugin {
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesbar'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/pride_bars.png" />';
-		echo esc_html__( '<p>Add a simple pride strip at the top of your website or an element on your page.</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Add a simple pride strip at the top of your website or an element on your page.',
+		'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
@@ -170,7 +173,7 @@ class pride_codes_plugin {
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyescode'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/code_corner.png" />';
-		echo esc_html__( '<p>Add a simple “Pride Codes” corner to your website.</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Add a simple “Pride Codes” corner to your website.', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
@@ -180,7 +183,7 @@ class pride_codes_plugin {
 			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesrainbow'], false ) );
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/rainbow_corner.png" />';
-		echo esc_html__( '<p>Add a simple pride corner to your website.</p>', 'pride-codes' );
+		echo '<p>' . esc_html__( 'Add a simple pride corner to your website.', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
