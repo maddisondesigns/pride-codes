@@ -28,6 +28,7 @@ class pride_codes_plugin {
 			'pridecodes_voteyesbar' => 'voteyesbar',
 			'pridecodes_voteyescode' => 'voteyescode',
 			'pridecodes_voteyesrainbow' => 'voteyesrainbow',
+			'pridecodes_voteyesau' => 'voteyesau',
 		);
 
 		add_action( 'admin_menu', array( $this, 'pridecodes_create_menu_option' ) );
@@ -207,6 +208,18 @@ class pride_codes_plugin {
 		echo '<p>' . esc_html__( 'Add a simple pride corner to your website.', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
+		
+		echo '<label class="radio-button-label">';
+		printf(
+			'<input id="pridecodes_voteyesau" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyesau'] ),
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyesau'], false )
+		);
+		echo '<div class="singlebutton">';
+		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/rainbow_corner_au_right.png" />';
+		echo '<p>' . esc_html__( 'Raise support and awareness.', 'pride-codes' ) . '</p>';
+		echo '</div>';
+		echo '</label>';
 
 		echo '</div>';
 	}
@@ -251,6 +264,10 @@ class pride_codes_plugin {
 
 			case $this->pridecodes_choices['pridecodes_voteyesrainbow'] :
 				wp_enqueue_script( 'voteyes', 'https://cdn.pride.codes/js/rainbowcorner.js', array(), '1.0.0', true );
+				break;
+				
+			case $this->pridecodes_choices['pridecodes_voteyesau'] :
+				wp_enqueue_script( 'voteyes', 'https://cdn.pride.codes/js/rainbowcorner_au.js', array(), '1.0.0', true );
 				break;
 
 			default:
