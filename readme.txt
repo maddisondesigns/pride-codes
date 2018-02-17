@@ -2,7 +2,7 @@
 Contributors: ahortin, devjack
 Tags: pride, marriage equality, lgbtqi, equality
 Requires at least: 4.8
-Tested up to: 4.8.1
+Tested up to: 4.9
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -51,6 +51,7 @@ The corner banners are fancy shmancy svg's and the horizontal strip is css. No i
 3. Simple Pride Strip
 4. Simple “Pride Codes” Corner
 5. Simple Pride Corner
+6. Pride Codes Settings
 
 
 == Changelog ==
