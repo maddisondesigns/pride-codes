@@ -3,7 +3,7 @@
 Plugin Name: Pride Codes
 Plugin URI: https://pride.codes
 Description: Show your support for your fellow LGBTQI+ friends & colleagues
-Version: 1.0.1
+Version: 1.1
 Author: Anthony Hortin
 Author URI: http://maddisondesigns.com
 Text Domain: pride-codes
@@ -28,6 +28,8 @@ class pride_codes_plugin {
 			'pridecodes_voteyesbar' => 'voteyesbar',
 			'pridecodes_voteyescode' => 'voteyescode',
 			'pridecodes_voteyesrainbow' => 'voteyesrainbow',
+			'pridecodes_voteyeswearitpurple' => 'voteyeswearitpurple',
+			'pridecodes_voteyeswearitpurpleaus' => 'voteyeswearitpurpleaus',
 		);
 
 		add_action( 'admin_menu', array( $this, 'pridecodes_create_menu_option' ) );
@@ -208,6 +210,30 @@ class pride_codes_plugin {
 		echo '</div>';
 		echo '</label>';
 
+		echo '<label class="radio-button-label">';
+		printf(
+			'<input id="pridecodes_voteyeswearitpurple" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyeswearitpurple'] ),
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyeswearitpurple'], false )
+		);
+		echo '<div class="singlebutton">';
+		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/wear_it_purple.png" />';
+		echo '<p>' . esc_html__( 'Add a simple “Wear it Purple” corner to your website.', 'pride-codes' ) . '</p>';
+		echo '</div>';
+		echo '</label>';
+
+		echo '<label class="radio-button-label">';
+		printf(
+			'<input id="pridecodes_voteyeswearitpurpleaus" type="radio" name="pridecodes_option[pridecodes_selected_widget]" value="%1$s" %2$s/>',
+			esc_attr( $this->pridecodes_choices['pridecodes_voteyeswearitpurpleaus'] ),
+			checked( $enable_widget, $this->pridecodes_choices['pridecodes_voteyeswearitpurpleaus'], false )
+		);
+		echo '<div class="singlebutton">';
+		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/wear_it_purple_australia.png" />';
+		echo '<p>' . esc_html__( 'Add a simple “Wear it Purple” Pride Codes corner to your website.', 'pride-codes' ) . '</p>';
+		echo '</div>';
+		echo '</label>';
+
 		echo '</div>';
 	}
 
@@ -251,6 +277,14 @@ class pride_codes_plugin {
 
 			case $this->pridecodes_choices['pridecodes_voteyesrainbow'] :
 				wp_enqueue_script( 'voteyes', 'https://cdn.pride.codes/js/rainbowcorner.js', array(), '1.0.0', true );
+				break;
+
+			case $this->pridecodes_choices['pridecodes_voteyeswearitpurple'] :
+				wp_enqueue_script( 'voteyes', 'https://pride.codes/js/purple-coner-code.js', array(), '1.0.0', true );
+				break;
+
+			case $this->pridecodes_choices['pridecodes_voteyeswearitpurpleaus'] :
+				wp_enqueue_script( 'voteyes', 'https://pride.codes/js/purple-corner-au.js', array(), '1.0.0', true );
 				break;
 
 			default:
