@@ -3,7 +3,7 @@ Contributors: ahortin, devjack
 Tags: pride, marriage equality, lgbtqi, equality
 Requires at least: 4.8
 Tested up to: 5.0.3
-Stable tag: 1.1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,12 +51,16 @@ The corner banners are fancy shmancy svg's and the horizontal strip is css. No i
 3. Simple Pride Strip
 4. Simple “Pride Codes” Corner
 5. Simple Pride Corner
-6. Pride Codes Settings
-
+6. Wear it Purple Pride Codes Corner
+7. Wear it Purple Australia Corner
+8. Pride Codes Settings
 
 == Changelog ==
 
-= 1.1 =
+= 1.1.1 =
+- Fixed text on settings page
+
+= 1.1.0 =
 - Added new 'Wear it Purple' Pride Code corners
 
 = 1.0.1 =

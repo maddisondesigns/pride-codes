@@ -3,7 +3,7 @@
 Plugin Name: Pride Codes
 Plugin URI: https://pride.codes
 Description: Show your support for your fellow LGBTQI+ friends & colleagues
-Version: 1.1
+Version: 1.1.1
 Author: Anthony Hortin
 Author URI: http://maddisondesigns.com
 Text Domain: pride-codes
@@ -218,7 +218,7 @@ class pride_codes_plugin {
 		);
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/wear_it_purple.png" />';
-		echo '<p>' . esc_html__( 'Add a simple “Wear it Purple” corner to your website.', 'pride-codes' ) . '</p>';
+		echo '<p>' . esc_html__( 'Add a simple “Wear it Purple” Pride Codes corner to your website.', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
@@ -230,7 +230,7 @@ class pride_codes_plugin {
 		);
 		echo '<div class="singlebutton">';
 		echo '<img src="' . plugin_dir_url( __FILE__ ) . 'images/wear_it_purple_australia.png" />';
-		echo '<p>' . esc_html__( 'Add a simple “Wear it Purple” Pride Codes corner to your website.', 'pride-codes' ) . '</p>';
+		echo '<p>' . esc_html__( 'Add a simple “Wear it Purple” Australia corner to your website.', 'pride-codes' ) . '</p>';
 		echo '</div>';
 		echo '</label>';
 
