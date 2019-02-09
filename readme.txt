@@ -3,9 +3,9 @@ Contributors: ahortin, devjack
 Tags: pride, marriage equality, lgbtqi, equality
 Requires at least: 4.8
 Tested up to: 5.0.3
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 A simple plugin to help show your support for your LGBTQI+ friends & colleagues.
 
@@ -56,6 +56,9 @@ The corner banners are fancy shmancy svg's and the horizontal strip is css. No i
 8. Pride Codes Settings
 
 == Changelog ==
+
+= 1.1.2 =
+- Update version due to .org svn issues
 
 = 1.1.1 =
 - Fixed text on settings page

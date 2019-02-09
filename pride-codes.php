@@ -3,7 +3,7 @@
 Plugin Name: Pride Codes
 Plugin URI: https://pride.codes
 Description: Show your support for your fellow LGBTQI+ friends & colleagues
-Version: 1.1.1
+Version: 1.1.2
 Author: Anthony Hortin
 Author URI: http://maddisondesigns.com
 Text Domain: pride-codes
